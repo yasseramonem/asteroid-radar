@@ -6,8 +6,8 @@ import androidx.room.PrimaryKey
 import com.squareup.moshi.Json
 
 
-@Entity
-data class SingleAsteroid (
+@Entity(tableName = "asteroids_table")
+data class AsteroidEntity (
 
     @PrimaryKey
     @Json(name = "id") var id: Long,
