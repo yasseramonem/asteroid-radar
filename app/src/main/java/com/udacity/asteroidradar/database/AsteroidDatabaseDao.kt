@@ -15,9 +15,9 @@ interface AsteroidDatabaseDao {
     @Update
     suspend fun update(asteroid: AsteroidEntity)
 
-    @Query("SELECT * FROM asteroids_table ORDER BY id DESC")
+    @Query("SELECT * FROM asteroids_table ")
     fun getAllAsteroids(): LiveData<List<AsteroidEntity>>
 
-    @Query("SELECT * FROM asteroids_table ORDER BY closeApproachDate DESC LIMIT 1")
+    @Query("SELECT * FROM asteroids_table LIMIT 1")
     suspend fun getAsteroid(): AsteroidEntity?
 }

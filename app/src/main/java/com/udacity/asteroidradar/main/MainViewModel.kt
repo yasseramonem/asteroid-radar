@@ -8,15 +8,19 @@ import androidx.lifecycle.viewModelScope
 import com.udacity.asteroidradar.Asteroid
 import com.udacity.asteroidradar.api.NeoWsAPI
 import com.udacity.asteroidradar.api.parseAsteroidsJsonResult
-import com.udacity.asteroidradar.database.AsteroidEntity
 import kotlinx.coroutines.launch
 import org.json.JSONObject
 
 class MainViewModel(): ViewModel() {
 
-    private var singleAsteroid = MutableLiveData<AsteroidEntity?>()
+//    private var singleAsteroid = MutableLiveData<AsteroidEntity?>()
 
-//    private val allAsteroids = dataSource.getAllAsteroids()
+//    private val allAsteroids = database.getAllAsteroids()
+
+    private val _navigateToDetailFragment = MutableLiveData<Asteroid>()
+    val navigateToDetailFragment: LiveData<Asteroid>
+            get() = _navigateToDetailFragment
+
 
     private val _asteroidsFromWeb = MutableLiveData<List<Asteroid>>()
     val asteroidsFromWeb: LiveData<List<Asteroid>>
@@ -52,6 +56,14 @@ class MainViewModel(): ViewModel() {
 
         }
 
+    fun onNavigateToAsteroidDetail(asteroid: Asteroid){
+        _navigateToDetailFragment.value = asteroid
+    }
+
+    fun onNavigationToAsteroidDetailComplete(){
+        _navigateToDetailFragment.value = null
+    }
+
 //    private fun initializeAsteroid(){
 //        viewModelScope.launch {
 //            singleAsteroid.value = getAsteroidFromDatabase()
@@ -59,6 +71,6 @@ class MainViewModel(): ViewModel() {
 //    }
 //
 //    private suspend fun getAsteroidFromDatabase(): AsteroidEntity?{
-//        return dataSource.getAsteroid()
+//        return database.getAsteroid()
 //    }
 }
