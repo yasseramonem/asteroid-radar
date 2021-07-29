@@ -8,12 +8,16 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.udacity.asteroidradar.R
 import com.udacity.asteroidradar.databinding.FragmentMainBinding
-import com.udacity.asteroidradar.main.AsteroidAdapter.AsteroidClickListener
 
 class MainFragment : Fragment() {
 
     private val viewModel: MainViewModel by lazy {
-        ViewModelProvider(this).get(MainViewModel::class.java)
+//        ViewModelProvider(this).get(MainViewModel::class.java)
+        val activity = requireNotNull(this.activity) {
+            "You can only access the viewModel after onViewCreated()"
+        }
+        ViewModelProvider(this, MainViewModelFactory(activity.application)).get(MainViewModel::class.java)
+
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -23,13 +27,14 @@ class MainFragment : Fragment() {
 
         binding.viewModel = viewModel
 
-        binding.asteroidRecycler.adapter = AsteroidAdapter( AsteroidClickListener {
+        binding.asteroidRecycler.adapter = AsteroidAdapter(AsteroidAdapter.AsteroidClickListener {
             viewModel.onNavigateToAsteroidDetail(it)
         })
-
+//
         viewModel.navigateToDetailFragment.observe(viewLifecycleOwner, Observer {
             if (it != null) {
                 findNavController().navigate(MainFragmentDirections.actionShowDetail(it))
+                viewModel.onNavigationToAsteroidDetailComplete()
             }
         })
 
