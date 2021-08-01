@@ -24,8 +24,8 @@ import java.util.concurrent.TimeUnit
 
 private val client = OkHttpClient.Builder()
         .connectTimeout(100, TimeUnit.SECONDS)
-        .readTimeout(100, TimeUnit.SECONDS)
-        .writeTimeout(100, TimeUnit.SECONDS)
+//        .readTimeout(100, TimeUnit.SECONDS)
+//        .writeTimeout(100, TimeUnit.SECONDS)
         .build()
 
 private val moshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()

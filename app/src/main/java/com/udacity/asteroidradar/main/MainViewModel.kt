@@ -6,11 +6,11 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.udacity.asteroidradar.domain.Asteroid
 import com.udacity.asteroidradar.Constants.KEY
 import com.udacity.asteroidradar.PictureOfDay
 import com.udacity.asteroidradar.api.NeoWsAPI
 import com.udacity.asteroidradar.database.getInstance
+import com.udacity.asteroidradar.domain.Asteroid
 import com.udacity.asteroidradar.repository.AsteroidRepository
 import kotlinx.coroutines.launch
 
@@ -33,7 +33,7 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
 
     init {
 
-        fetchImgOfToday()
+//        fetchImgOfToday()
         fetchAsteroidData()
     }
 
@@ -42,8 +42,19 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
     private fun fetchAsteroidData(){
 
         viewModelScope.launch {
+
+            try {
                 asteroidRepository.refreshAsteroids()
 
+                var img = NeoWsAPI.retrofitService.getImgOfToday(KEY)
+
+                Log.i("ImageCrashed", img.toString())
+                if(img.mediaType == "image") {
+                    _imgOfToday.value = img
+                }
+            }catch (e: Exception){
+                Log.i("Getting Data", "Something Happened")
+            }
         }
     }
 
@@ -55,17 +66,17 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
         _navigateToDetailFragment.value = null
     }
 
-    private fun fetchImgOfToday(){
-        viewModelScope.launch {
-            try {
-                var img = NeoWsAPI.retrofitService.getImgOfToday(KEY)
-                Log.i("ImageCrashed", img.toString())
-                if(img.mediaType == "image"){
-                    _imgOfToday.value = img
-                }
-            } catch (e: Exception){
-                Log.i("ImageCrashed", e.toString())
-            }
-        }
-    }
+//    private fun fetchImgOfToday(){
+//        viewModelScope.launch {
+//            try {
+//                var img = NeoWsAPI.retrofitService.getImgOfToday(KEY)
+//                Log.i("ImageCrashed", img.toString())
+//                if(img.mediaType == "image"){
+//                    _imgOfToday.value = img
+//                }
+//            } catch (e: Exception){
+//                Log.i("ImageCrashed", e.toString())
+//            }
+//        }
+//    }
 }

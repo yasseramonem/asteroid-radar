@@ -12,12 +12,8 @@ import com.udacity.asteroidradar.databinding.FragmentMainBinding
 class MainFragment : Fragment() {
 
     private val viewModel: MainViewModel by lazy {
-//        ViewModelProvider(this).get(MainViewModel::class.java)
-        val activity = requireNotNull(this.activity) {
-            "You can only access the viewModel after onViewCreated()"
-        }
+        val activity = requireNotNull(this.activity)
         ViewModelProvider(this, MainViewModelFactory(activity.application)).get(MainViewModel::class.java)
-
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -30,7 +26,8 @@ class MainFragment : Fragment() {
         binding.asteroidRecycler.adapter = AsteroidAdapter(AsteroidAdapter.AsteroidClickListener {
             viewModel.onNavigateToAsteroidDetail(it)
         })
-//
+
+
         viewModel.navigateToDetailFragment.observe(viewLifecycleOwner, Observer {
             if (it != null) {
                 findNavController().navigate(MainFragmentDirections.actionShowDetail(it))
@@ -42,6 +39,8 @@ class MainFragment : Fragment() {
 
         return binding.root
     }
+
+
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.main_overflow_menu, menu)
