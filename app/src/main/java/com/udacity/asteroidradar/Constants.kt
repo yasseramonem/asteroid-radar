@@ -5,5 +5,4 @@ object Constants {
     const val DEFAULT_END_DATE_DAYS = 7
     const val BASE_URL = "https://api.nasa.gov/"
     const val WORK_NAME = "RefreshAsteroidsWorker"
-    const val KEY = "vskR8d9nukrAdgaMe4OyDYK2ywoxJsGLZGMhRc4G"
 }

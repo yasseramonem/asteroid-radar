@@ -1,12 +1,14 @@
 package com.udacity.asteroidradar.api
 
-import com.udacity.asteroidradar.domain.Asteroid
 import com.udacity.asteroidradar.Constants
+import com.udacity.asteroidradar.Constants.API_QUERY_DATE_FORMAT
+import com.udacity.asteroidradar.domain.Asteroid
 import org.json.JSONObject
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
+//A helper function provided by the Starter Code to be used to parse Json String into an Arraylist
 fun parseAsteroidsJsonResult(jsonResult: JSONObject): ArrayList<Asteroid> {
     val nearEarthObjectsJson = jsonResult.getJSONObject("near_earth_objects")
 
@@ -42,16 +44,27 @@ fun parseAsteroidsJsonResult(jsonResult: JSONObject): ArrayList<Asteroid> {
     return asteroidList
 }
 
+//A helper function provided by the Starter Code to be used within parseAsteroidsJsonResult()
+//to get only 7 days of Asteroids data from the REST Api
 private fun getNextSevenDaysFormattedDates(): ArrayList<String> {
     val formattedDateList = ArrayList<String>()
 
     val calendar = Calendar.getInstance()
     for (i in 0..Constants.DEFAULT_END_DATE_DAYS) {
         val currentTime = calendar.time
-        val dateFormat = SimpleDateFormat(Constants.API_QUERY_DATE_FORMAT, Locale.getDefault())
+        val dateFormat = SimpleDateFormat(API_QUERY_DATE_FORMAT, Locale.getDefault())
         formattedDateList.add(dateFormat.format(currentTime))
         calendar.add(Calendar.DAY_OF_YEAR, 1)
     }
 
     return formattedDateList
+}
+
+
+//A helper function to get today's Date formatted to be used when Fetching Asteroids data from REST
+// API Service and also to be used when Fetching & Deleting Asteroids data from Database
+fun getCurrentDate(): String{
+    val calendar = Calendar.getInstance().time
+    val dateFormat = SimpleDateFormat(API_QUERY_DATE_FORMAT, Locale.getDefault())
+    return dateFormat.format(calendar)
 }

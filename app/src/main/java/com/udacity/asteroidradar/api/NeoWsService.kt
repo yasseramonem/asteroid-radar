@@ -14,22 +14,16 @@ import retrofit2.http.Query
 import java.util.concurrent.TimeUnit
 
 
-//    enum class MarsApiFilter(val value: String) {
-//        SHOW_WEEK_ASTEROIDS("rent"),
-//        SHOW_TODAY_ASTEROIDS("buy"),
-//        SHOW_SAVED_ASTEROIDS("all")
-//    }
-
 //Creating OkHttpClient to increase avoid Error: SocketTimeout following
 
 private val client = OkHttpClient.Builder()
         .connectTimeout(100, TimeUnit.SECONDS)
-//        .readTimeout(100, TimeUnit.SECONDS)
-//        .writeTimeout(100, TimeUnit.SECONDS)
         .build()
 
+//Creating an instance of Moshi to handle the ImageOfToday call
 private val moshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
 
+//Buidling Retrofit service using 2 converter factories Moshi & Scalar
 private val retrofit = Retrofit.Builder()
         .addConverterFactory(ScalarsConverterFactory.create())
         .addConverterFactory(MoshiConverterFactory.create(moshi))
@@ -37,18 +31,25 @@ private val retrofit = Retrofit.Builder()
         .client(client)
         .build()
 
+
+//Creating NeoWS Service Interface using @GET Annotation to fetch Asteroids Data as well as Image of Today
+//the Asteroids Query is filtered by the START_DATE using a String Parameter will be added on the function call
+//so that we can only get the new data from Today onwards
+//Adding the API_KEY using a String Parameter will be added on function call as well
 interface NeoWsService {
 
         @GET("neo/rest/v1/feed")
-        suspend fun getAsteroids( @Query("api_key" ) key: String ): String
+        suspend fun getAsteroids(  @Query("api_key" ) key: String ): String
 
         @GET("planetary/apod")
         suspend fun getImgOfToday( @Query("api_key" ) key: String ): PictureOfDay
 }
 
+//NeoWs API Object to be exposed to the rest of the application
 object NeoWsAPI{
         val retrofitService: NeoWsService by lazy {
             retrofit.create(NeoWsService::class.java)
         }
 }
 
+//@Query("start_date") date: String,

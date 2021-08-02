@@ -1,9 +1,10 @@
 package com.udacity.asteroidradar.api
 
-import com.udacity.asteroidradar.domain.Asteroid
 import com.udacity.asteroidradar.database.AsteroidEntity
+import com.udacity.asteroidradar.domain.Asteroid
 
-
+//Creating a Helper function to be used within Repository to retrieve Asteroids Data from database
+//and use it to update views with liveData
 fun List<AsteroidEntity>.asDomainModel(): List<Asteroid> {
     return map {
         Asteroid(
@@ -18,6 +19,10 @@ fun List<AsteroidEntity>.asDomainModel(): List<Asteroid> {
         )
     }
 }
+
+
+//Creating a helper function to be used within Repository to insert Asteroids data that was fetched
+//via Repository into Database
 
 fun ArrayList<Asteroid>.asDatabaseModel(): Array<AsteroidEntity> {
     return map {

@@ -1,12 +1,11 @@
 package com.udacity.asteroidradar.main
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.udacity.asteroidradar.Constants.KEY
+import com.udacity.asteroidradar.BuildConfig
 import com.udacity.asteroidradar.PictureOfDay
 import com.udacity.asteroidradar.api.NeoWsAPI
 import com.udacity.asteroidradar.database.getInstance
@@ -14,9 +13,15 @@ import com.udacity.asteroidradar.domain.Asteroid
 import com.udacity.asteroidradar.repository.AsteroidRepository
 import kotlinx.coroutines.launch
 
+enum class AsteroidsFilter{ SHOW_TODAY, SHOW_SAVED, SHOW_WEEK }
+
 class MainViewModel(application: Application): AndroidViewModel(application) {
 
+    private val database = getInstance(application)
 
+    private val asteroidRepository = AsteroidRepository(database)
+
+    private var filter = AsteroidsFilter.SHOW_SAVED
 
     private val _imgOfToday = MutableLiveData<PictureOfDay>()
     val imgOfToday: LiveData<PictureOfDay>
@@ -27,36 +32,39 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
             get() = _navigateToDetailFragment
 
 
-    private val database = getInstance(application)
-
-    private val asteroidRepository = AsteroidRepository(database)
 
     init {
 
-//        fetchImgOfToday()
         fetchAsteroidData()
     }
 
-    val asteroidsFromWeb = asteroidRepository.asteroids
+
+    val asteroids = asteroidRepository.getAsteroidsFiltered(filter)
 
     private fun fetchAsteroidData(){
 
         viewModelScope.launch {
 
             try {
+
                 asteroidRepository.refreshAsteroids()
 
-                var img = NeoWsAPI.retrofitService.getImgOfToday(KEY)
+                _imgOfToday.value = NeoWsAPI.retrofitService.getImgOfToday(BuildConfig.API_KEY)
+//                var img = NeoWsAPI.retrofitService.getImgOfToday(KEY)
+//
+//                if (img.mediaType == "image") {
+//
+//                    _imgOfToday.value = img
+//
+//                }
 
-                Log.i("ImageCrashed", img.toString())
-                if(img.mediaType == "image") {
-                    _imgOfToday.value = img
-                }
             }catch (e: Exception){
-                Log.i("Getting Data", "Something Happened")
+
             }
         }
     }
+
+
 
     fun onNavigateToAsteroidDetail(asteroid: Asteroid){
         _navigateToDetailFragment.value = asteroid
@@ -66,17 +74,9 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
         _navigateToDetailFragment.value = null
     }
 
-//    private fun fetchImgOfToday(){
-//        viewModelScope.launch {
-//            try {
-//                var img = NeoWsAPI.retrofitService.getImgOfToday(KEY)
-//                Log.i("ImageCrashed", img.toString())
-//                if(img.mediaType == "image"){
-//                    _imgOfToday.value = img
-//                }
-//            } catch (e: Exception){
-//                Log.i("ImageCrashed", e.toString())
-//            }
-//        }
-//    }
+    fun updateFilter(filter: AsteroidsFilter): AsteroidsFilter {
+
+        return filter
+    }
+
 }
