@@ -50,13 +50,6 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
                 asteroidRepository.refreshAsteroids()
 
                 _imgOfToday.value = NeoWsAPI.retrofitService.getImgOfToday(BuildConfig.API_KEY)
-//                var img = NeoWsAPI.retrofitService.getImgOfToday(KEY)
-//
-//                if (img.mediaType == "image") {
-//
-//                    _imgOfToday.value = img
-//
-//                }
 
             }catch (e: Exception){
 

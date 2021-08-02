@@ -39,10 +39,5 @@ class AsteroidRepository(private val asteroidsDatabase: AsteroidsDatabase) {
         }
     }
 
-//    suspend fun refreshImage(){
-//        withContext(Dispatchers.Default){
-//            val imgOfToday = NeoWsAPI.retrofitService.getImgOfToday(KEY)
-//        }
-//    }
 }
 
