@@ -20,6 +20,6 @@
     <string name="asteroid">كويكب</string>
     <string name="astronomical_unit_definition">تعريف الوحدة الفلكية</string>
     <string name="astronomical_unit_format">au %f</string>
-    <string name="km_unit_format" translatable="false">km %f</string>
+    <string name="km_unit_format">km %f</string>
     <string name="km_s_unit_format">km/s %f</string>
 </resources>
