@@ -17,6 +17,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="@{() -> clickListener.onClick(asteroid)}"
+        android:contentDescription="@{@string/asteroid + asteroid.codename + @string/close_approach_data_title + asteroid.closeApproachDate}"
         android:paddingStart="@dimen/standard"
         android:paddingTop="@dimen/standard"
         android:paddingEnd="@dimen/standard">
@@ -38,7 +39,7 @@
             app:layout_constraintEnd_toStartOf="@+id/guideline"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="(2010 PK9)"
+            tools:text="@string/exmaple_asteroid_title"
             style="@style/main_text" />
 
         <TextView
@@ -48,7 +49,7 @@
             app:layout_constraintEnd_toStartOf="@+id/guideline"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/asteroid_name"
-            tools:text="20 - 20 - 20"
+            tools:text="@string/example_date"
             style="@style/sub_text" />
 
         <androidx.constraintlayout.widget.Guideline

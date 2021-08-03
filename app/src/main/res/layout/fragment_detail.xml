@@ -41,6 +41,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:contentDescription="@{@string/close_approach_data_title + asteroid.closeApproachDate}"
                     android:orientation="vertical">
 
                     <TextView
@@ -63,7 +64,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/standard"
                     android:gravity="center_vertical"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:contentDescription="@{@string/absolute_magnitude_title + String.format(@string/astronomical_unit_format, asteroid.absoluteMagnitude)}">
 
                     <LinearLayout
                         android:layout_width="0dp"
@@ -91,9 +93,16 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="@dimen/standard"
+                        android:contentDescription="@string/astronomical_unit_definition"
                         app:srcCompat="@drawable/ic_help_circle" />
 
                 </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:contentDescription="@{@string/estimated_diameter_title + String.format(@string/km_unit_format, asteroid.estimatedDiameter)}"
+                android:orientation="vertical">
 
                 <TextView
                     android:text="@string/estimated_diameter_title"
@@ -105,6 +114,14 @@
                     app:kmUnitText="@{asteroid.estimatedDiameter}"
                     tools:text="0.82 km" />
 
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:contentDescription="@{@string/relative_velocity_title + String.format(@string/km_s_unit_format, asteroid.relativeVelocity)}"
+                android:orientation="vertical">
+
                 <TextView
                     style="@style/detail_text_marginHigh"
                     android:text="@string/relative_velocity_title" />
@@ -115,6 +132,14 @@
                     app:velocityText="@{asteroid.relativeVelocity}"
                     tools:text="11.9 km/s" />
 
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:contentDescription="@{@string/distance_from_earth_title + String.format(@string/astronomical_unit_format, asteroid.distanceFromEarth)}"
+                android:orientation="vertical">
+
                 <TextView
                     style="@style/detail_text_marginHigh"
                     android:text="@string/distance_from_earth_title" />
@@ -124,6 +149,8 @@
                     style="@style/detail_text_marginLow"
                     app:astronomicalUnitText="@{asteroid.distanceFromEarth}"
                     tools:text="0.0924 au" />
+
+            </LinearLayout>
 
             </LinearLayout>
         </ScrollView>
