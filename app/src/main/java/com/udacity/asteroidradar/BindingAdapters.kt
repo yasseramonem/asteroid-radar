@@ -21,7 +21,7 @@ fun bindImageOfTheDay(imgView: ImageView, imgUrl: String?){
         val imgUri = imgUrl.toUri().buildUpon().scheme("https").build()
         Picasso.with(imgView.context)
             .load(imgUri)
-            .error(R.drawable.ic_launcher_foreground)
+            .error(R.drawable.ic_baseline_terrain_24)
             .into(imgView)
     }
 }
