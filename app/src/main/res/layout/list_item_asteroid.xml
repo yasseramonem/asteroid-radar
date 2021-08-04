@@ -17,7 +17,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="@{() -> clickListener.onClick(asteroid)}"
-        android:contentDescription="@{@string/asteroid + asteroid.codename + @string/close_approach_data_title + asteroid.closeApproachDate}"
         android:paddingStart="@dimen/standard"
         android:paddingTop="@dimen/standard"
         android:paddingEnd="@dimen/standard">
@@ -36,6 +35,7 @@
         <TextView
             android:id="@+id/asteroid_name"
             android:text="@{asteroid.codename}"
+            android:contentDescription="@{@string/asteroid + asteroid.codename}"
             app:layout_constraintEnd_toStartOf="@+id/guideline"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -45,6 +45,7 @@
         <TextView
             android:id="@+id/close_approach_date"
             android:text="@{asteroid.closeApproachDate}"
+            android:contentDescription="@{@string/close_approach_data_title + asteroid.closeApproachDate}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/guideline"
             app:layout_constraintStart_toStartOf="parent"

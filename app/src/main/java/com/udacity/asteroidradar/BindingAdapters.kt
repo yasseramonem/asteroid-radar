@@ -28,10 +28,13 @@ fun bindImageOfTheDay(imgView: ImageView, imgUrl: String?){
 
 @BindingAdapter("statusIcon")
 fun bindAsteroidStatusImage(imageView: ImageView, isHazardous: Boolean) {
+    val context = imageView.context
     if (isHazardous) {
         imageView.setImageResource(R.drawable.ic_status_potentially_hazardous)
+        imageView.contentDescription = context.getString(R.string.hazardous_image_description)
     } else {
         imageView.setImageResource(R.drawable.ic_status_normal)
+        imageView.contentDescription = context.getString(R.string.safe_image_description)
     }
 }
 
